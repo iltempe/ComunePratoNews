@@ -17,7 +17,6 @@ require_once('utility.php');
 function parsing($url) {
 
  	$html= file_get_contents($url);
- 	//$html= parse_url($url);
  	
 	$dom = new DOMDocument();
 	$dom->loadHTML($html);
@@ -33,19 +32,17 @@ function parsing($url) {
    	$res2=$xpath->query($my_xpath_query);
    	
    	//scrape links
-   	$my_xpath_query2 = "//div[2]/p/a/@href";
+   	$my_xpath_query2 = "//div[2]/p/a[1]/@href";
 	$res3 = $xpath->query($my_xpath_query2);
 	
 	//scrape text links
    	$my_xpath_query2 = "//div[2]/p/a";
 	$res4 = $xpath->query($my_xpath_query2);
 	
-	
 
 	foreach($res1 as $span1)
 	   {
 			$string[] = $span1->nodeValue;
-			//$string = text_do_better($string);
 		}
 	foreach($res2 as $span2)
 	   {
@@ -56,41 +53,36 @@ function parsing($url) {
 	   {
 			$links[] = $span3->nodeValue;
 		}    
-		//$links = link_do_better($links);
 		
-	
-		//divido in items
-		//$string_arr = explode("Numero: ", $string);
-		//unset($string_arr[0]);
-		//rimuovo i tags
-		//$string_arr=str_replace("Tipo:", ";",$string_arr);
-		//$string_arr=str_replace("Data pubblicazione:", ";",$string_arr);
-		//$string_arr=str_replace("Data scadenza:", ";",$string_arr);	
-		//$string_arr=str_replace("Area di Riferimento:", ";",$string_arr);
-		//$string_arr=str_replace("Oggetto:", ";",$string_arr);
-		//$string_arr=str_replace("Numero:", ";",$string_arr);
-		//$string_arr=str_replace("Documento", "",$string_arr);		
-		//$string_arr = str_replace("\xc2\xa0", "", $string_arr);
-
-	//for($i = 1; $i <=count($string_arr); $i++)
-	//	{
-	//		$data[$i-1]=explode(";", $string_arr[$i]);
-	//	}
-
-		//DATA
-		print_r($string);
+		//TEXT
+		//print_r($string);
 
 		//DATE
-		print_r($date);
+		//print_r($date);
 		
 		//LINKS
-		print_r($links);
-	
-		//print_r(array($data, $links));
-		//return array($data, $links);
+		//print_r($links);
+			
+		$res=prepare_data($string,$date,$links);
+
+		print_r($res);
+		return $res;
 
 }
 
+//data array preparation
+//make an array of text - date - links for feed rss items creation
+function prepare_data($string,$date,$links)
+{
+	//date in / / / format
+	$date=str_replace(".", "/",$date);
+	
+	//text
+	$string=text_do_better($string);
+	$string=substr_replace($string, " ", 8, 0);
+		
+	return array($string,$date,$links);
+}
 
 
 

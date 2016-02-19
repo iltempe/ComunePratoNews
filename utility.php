@@ -23,11 +23,15 @@ function get_string_between($string, $start, $end){
     return substr($string,$ini,$len);
 }
 
-//from dd/mm/YYYY string to RSS pubDate
+//from dd/mm/YY string to RSS pubDate
 function string2dataRSS($datestring)
 {
+		date_default_timezone_set('Europe/Rome');
 		$datestring=str_replace("/", "-",$datestring);
+		$datestring_arr = explode("-", $datestring);
+		$datestring=$datestring_arr[2]. "-" .$datestring_arr[1]. "-". $datestring_arr[0];
 		$datestring=strtotime($datestring);
+		//print_r($datestring);
 		$pubDate=date('r',$datestring);
 		return $pubDate;
 }
@@ -44,21 +48,26 @@ function curl_manage($url)
 		curl_setopt($ch,CURLOPT_URL,$url);
 		curl_setopt($ch,CURLOPT_TIMEOUT,120);
 		$data = curl_exec($ch);
-		curl_close($ch);
-		
+		curl_close($ch);	
 		return $data;
 }
 
 //migliora blocchi di testo
 function text_do_better($string)
 {
-    $string = preg_replace('/^[ \t]*[\r\n]+/m', '', $string);
+	$string = preg_replace('/^[ \t]*[\r\n]+/m', '', $string);
 	$string = str_replace("\n", "", $string);
 	$string = str_replace("\r", "", $string);
+	
+	// remove non-breaking spaces and other non-standart spaces
+	$string = preg_replace('~\s+~u', ' ', $string);
+	// replace controls symbols with "?"
+	$string = preg_replace('~\p{C}+~u', '?', $string);
+	
 	return $string;
 }
 
-//migliora links togliendo tail
+//migliora links togliendo tail PHP SESSION
 function link_do_better($link)
 {
 	$link = preg_replace('#([\w\d]+=[\w\d]{32})#',null,$link);
