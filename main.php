@@ -43,10 +43,11 @@ function rss_build($comune) {
 
 		for($i = 0; $i <count($parsed[0]); $i++)
 			{ 
+				print_r(escapeXmlValue($parsed[2][$i]));
 				$RB->addItem();
 				$RB->addItemElement('title', $parsed[0][$i]);
 				$RB->addItemElement('description', $parsed[0][$i]);
-				$RB->addItemElement('link', $parsed[2][$i]);
+				$RB->addItemElement('link', escapeXmlValue($parsed[2][$i]));
 				$RB->addItemElement('pubDate', string2dataRSS($parsed[1][$i]));
 			}
 

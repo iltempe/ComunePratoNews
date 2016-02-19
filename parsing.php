@@ -65,7 +65,7 @@ function parsing($url) {
 			
 		$res=prepare_data($string,$date,$links);
 
-		print_r($res);
+		//print_r($res);
 		return $res;
 
 }
@@ -81,6 +81,8 @@ function prepare_data($string,$date,$links)
 	$string=text_do_better($string);
 	$string=substr_replace($string, " ", 8, 0);
 		
+	//links
+	
 	return array($string,$date,$links);
 }
 

@@ -75,5 +75,10 @@ function link_do_better($link)
 	return $link;
 }
 
+ function escapeXmlValue($value)
+{
+    return is_null($value) ? null : htmlspecialchars($value, ENT_XML1, 'UTF-8');
+}
+
 
 
