@@ -49,8 +49,11 @@ function rss_build($comune) {
 				$RB->addItemElement('link', escapeXmlValue($parsed[2][$i]));
 				$RB->addItemElement('pubDate', string2dataRSS($parsed[1][$i]));
 			}
+	
+	$RB=str_replace("&amp;", "%26", $RB);
+	$RB=str_replace("=", "%3D", $RB);
+		echo $RB;
 
-	echo $RB;
 	file_put_contents($file_rss, $RB);
 
 }

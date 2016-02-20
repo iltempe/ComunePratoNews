@@ -59,19 +59,18 @@ function parsing($url) {
 
 		//DATE
 		//print_r($date);
-		
+
 		//LINKS
 		for($i = 0; $i <count($links); $i++)
 		{
-			$links[i]=urlencode($links[i]);
+			$links[i]=myUrlEncode($links[i]);
 
-			//$links[i]=str_replace("&", "%26", $links[i]);
-			//$links[i]=str_replace("=", "%3D", $links[i]);
 		}
+		//print_r($links);
 			
 		$res=prepare_data($string,$date,$links);
 
-		print_r($res);
+		//print_r($res);
 		return $res;
 
 }
