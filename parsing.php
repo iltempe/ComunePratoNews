@@ -61,11 +61,17 @@ function parsing($url) {
 		//print_r($date);
 		
 		//LINKS
-		//print_r($links);
+		for($i = 0; $i <count($links); $i++)
+		{
+			$links[i]=urlencode($links[i]);
+
+			//$links[i]=str_replace("&", "%26", $links[i]);
+			//$links[i]=str_replace("=", "%3D", $links[i]);
+		}
 			
 		$res=prepare_data($string,$date,$links);
 
-		//print_r($res);
+		print_r($res);
 		return $res;
 
 }
@@ -81,8 +87,6 @@ function prepare_data($string,$date,$links)
 	$string=text_do_better($string);
 	$string=substr_replace($string, " ", 8, 0);
 		
-	//links
-	
 	return array($string,$date,$links);
 }
 
