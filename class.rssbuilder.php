@@ -24,7 +24,7 @@ class RSSBuilder extends DOMDocument {
 	 */
 	public function __construct() {
 
-		parent::__construct('1.0', 'utf-8');
+		parent::__construct();
 
 		$this->formatOutput = TRUE;
 
