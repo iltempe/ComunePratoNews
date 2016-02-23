@@ -23,6 +23,11 @@ date_default_timezone_set('Europe/Rome');
 rss_build('prato');
 
 //FEED BUILDER
+//the output of parser must be an array of array that for each item rapresent with an element
+//- title
+//- description
+//- pubDate
+//- item link
 function rss_build($comune) {
 
 	//build the RSS feed
@@ -48,11 +53,10 @@ function rss_build($comune) {
 				$RB->addItemElement('description', $parsed[0][$i]);
 				$RB->addItemElement('link', str_replace("&amp;", "%26",escapeXmlValue($parsed[2][$i])));
 				$RB->addItemElement('pubDate', string2dataRSS($parsed[1][$i]));
+				//echo $i;
 			}
-	
-	//$RB=str_replace("&amp;", "%26", $RB);
-	//$RB=str_replace("=", "%3D", $RB);
-		echo $RB;
+
+	echo $RB;
 
 	file_put_contents($file_rss, $RB);
 
